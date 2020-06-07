@@ -1,0 +1,52 @@
+@import '~antd/dist/antd.css';
+
+.navigation-pane {
+  min-height: 100vh;
+}
+
+.nav-title {
+  width: 100%;
+  display: flex;
+  color: #eee;
+}
+
+.nav-title > * {
+  margin: 0em auto 2em auto;
+}
+
+.logo-container {
+  margin-bottom: 2em;
+}
+
+.logo {
+  display: flex;
+  width: 80%;
+  margin: 2em auto 2em auto;
+}
+
+.content-container {
+  padding: 4em;
+}
+
+h4 {
+  color: #999;
+  font-style: italic;
+}
+
+.header-container {
+  margin-bottom: 2em;
+}
+
+.uploader {
+  max-height: 200px;
+  margin-bottom: 2em;
+}
+
+.uploader-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.uploader-container > .submit-button {
+  margin-left: auto;
+}
