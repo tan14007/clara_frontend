@@ -1,30 +1,30 @@
 Arguments: 
-  /Users/phanukornsunthornwetchapong/.nvm/versions/node/v10.16.0/bin/node /usr/local/Cellar/yarn/1.17.3/libexec/bin/yarn.js add @type/antd
+  /usr/bin/node /usr/local/bin/yarn add @types/image-convert
 
 PATH: 
-  /Users/phanukornsunthornwetchapong/Downloads/google-cloud-sdk/bin:/Users/phanukornsunthornwetchapong/Library/Python/3.7/bin:/usr/local/opt/openssl@1.1/bin:/usr/local/opt/qt/bin:/usr/local/sbin:/Users/phanukornsunthornwetchapong/.nvm/versions/node/v10.16.0/bin:/usr/local/opt/ruby/bin:/usr/local/opt/sphinx-doc/bin:/usr/local/opt/libpq/bin:/usr/local/opt/libpq/bin:/usr/local/opt/libpcap/bin:/usr/local/opt/bzip2/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin:/usr/local/share/dotnet:/opt/X11/bin:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Applications/Wireshark.app/Contents/MacOS:/Applications/Xamarin Workbooks.app/Contents/SharedSupport/path-bin:/Users/phanukornsunthornwetchapong/.local/bin:/usr/local/mysql/bin:/Users/phanukornsunthornwetchapong/.local/bin
+  /usr/local/cuda-10.2/bin:/usr/local/cuda-10.2/NsightCompute-2019.1:/home/polp/anaconda3/bin:/home/polp/anaconda3/condabin:/home/polp/.cargo/bin:/home/polp/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/opt/Kafka/kafka_2.11-1.0.0/bin
 
 Yarn version: 
-  1.17.3
+  1.22.4
 
 Node version: 
-  10.16.0
+  8.10.0
 
 Platform: 
-  darwin x64
+  linux x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/@type%2fantd: Not found
-      at Request.params.callback [as _callback] (/usr/local/Cellar/yarn/1.17.3/libexec/lib/cli.js:66830:18)
-      at Request.self.callback (/usr/local/Cellar/yarn/1.17.3/libexec/lib/cli.js:140464:22)
-      at Request.emit (events.js:198:13)
-      at Request.<anonymous> (/usr/local/Cellar/yarn/1.17.3/libexec/lib/cli.js:141436:10)
-      at Request.emit (events.js:198:13)
-      at IncomingMessage.<anonymous> (/usr/local/Cellar/yarn/1.17.3/libexec/lib/cli.js:141358:12)
-      at Object.onceWrapper (events.js:286:20)
-      at IncomingMessage.emit (events.js:203:15)
-      at endReadableNT (_stream_readable.js:1129:12)
-      at process._tickCallback (internal/process/next_tick.js:63:19)
+  Error: https://registry.yarnpkg.com/@types%2fimage-convert: Not found
+      at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66987:18)
+      at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140748:22)
+      at emitTwo (events.js:126:13)
+      at Request.emit (events.js:214:7)
+      at Request.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141720:10)
+      at emitOne (events.js:116:13)
+      at Request.emit (events.js:211:7)
+      at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/yarn/lib/cli.js:141642:12)
+      at Object.onceWrapper (events.js:313:30)
+      at emitNone (events.js:111:20)
 
 npm manifest: 
   {
@@ -39,11 +39,16 @@ npm manifest:
       "@types/node": "^12.0.0",
       "@types/react": "^16.9.0",
       "@types/react-dom": "^16.9.0",
+      "@types/request": "^2.48.5",
       "antd": "^4.3.0",
       "axios": "^0.19.2",
+      "form-data": "^3.0.0",
+      "image-convert": "^0.1.33",
+      "node": "^14.4.0",
       "react": "^16.13.1",
       "react-dom": "^16.13.1",
       "react-scripts": "3.4.1",
+      "request": "^2.88.2",
       "typescript": "~3.7.2"
     },
     "scripts": {
@@ -1596,6 +1601,11 @@ Lockfile:
     dependencies:
       "@babel/types" "^7.3.0"
   
+  "@types/caseless@*":
+    version "0.12.2"
+    resolved "https://registry.yarnpkg.com/@types/caseless/-/caseless-0.12.2.tgz#f65d3d6389e01eeb458bd54dc8f52b95a9463bc8"
+    integrity sha512-6ckxMjBBD8URvjB6J3NcnuAn5Pkl7t3TizAg+xdlzzQGSPSmBcXf8KoIH0ua/i+tio+ZRUHEXp0HEmvaR4kt0w==
+  
   "@types/color-name@^1.1.1":
     version "1.1.1"
     resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
@@ -1697,6 +1707,16 @@ Lockfile:
       "@types/prop-types" "*"
       csstype "^2.2.0"
   
+  "@types/request@^2.48.5":
+    version "2.48.5"
+    resolved "https://registry.yarnpkg.com/@types/request/-/request-2.48.5.tgz#019b8536b402069f6d11bee1b2c03e7f232937a0"
+    integrity sha512-/LO7xRVnL3DxJ1WkPGDQrp4VTV1reX9RkC85mJ+Qzykj2Bdw+mG15aAfDahc76HtknjzE16SX/Yddn6MxVbmGQ==
+    dependencies:
+      "@types/caseless" "*"
+      "@types/node" "*"
+      "@types/tough-cookie" "*"
+      form-data "^2.5.0"
+  
   "@types/stack-utils@^1.0.1":
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
@@ -1724,6 +1744,11 @@ Lockfile:
       "@types/react-dom" "*"
       "@types/testing-library__dom" "*"
       pretty-format "^25.1.0"
+  
+  "@types/tough-cookie@*":
+    version "4.0.0"
+    resolved "https://registry.yarnpkg.com/@types/tough-cookie/-/tough-cookie-4.0.0.tgz#fef1904e4668b6e5ecee60c52cc6a078ffa6697d"
+    integrity sha512-I99sngh224D0M7XgW1s120zxCt3VYQ3IQsuw3P3jbq5GG4yc79+ZjyKznyOGIQrflfylLgcfekeZW/vk0yng6A==
   
   "@types/yargs-parser@*":
     version "15.0.0"
@@ -1942,6 +1967,18 @@ Lockfile:
     version "4.2.2"
     resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
     integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
+  
+  "File@>= 0.10.0", File@^0.10.2:
+    version "0.10.2"
+    resolved "https://registry.yarnpkg.com/File/-/File-0.10.2.tgz#e899f776d273e2243ba86105bb3b056d0fb95604"
+    integrity sha1-6Jn3dtJz4iQ7qGEFuzsFbQ+5VgQ=
+    dependencies:
+      mime ">= 0.0.0"
+  
+  "FileList@>= 0.10.0", FileList@^0.10.2:
+    version "0.10.2"
+    resolved "https://registry.yarnpkg.com/FileList/-/FileList-0.10.2.tgz#6003b1a9715934164b67c434ad6a8741a1cd147a"
+    integrity sha1-YAOxqXFZNBZLZ8Q0rWqHQaHNFHo=
   
   abab@^2.0.0:
     version "2.0.3"
@@ -2791,6 +2828,16 @@ Lockfile:
       ieee754 "^1.1.4"
       isarray "^1.0.0"
   
+  "bufferjs@> 0.2.0":
+    version "3.0.1"
+    resolved "https://registry.yarnpkg.com/bufferjs/-/bufferjs-3.0.1.tgz#0692e829cb10a10550e647390b035eb06c38e8ef"
+    integrity sha1-BpLoKcsQoQVQ5kc5CwNesGw46O8=
+  
+  bufferjs@^2.0.0:
+    version "2.0.0"
+    resolved "https://registry.yarnpkg.com/bufferjs/-/bufferjs-2.0.0.tgz#685e71ed5c0600e3d703ff9bd012bb3270a39e28"
+    integrity sha1-aF5x7VwGAOPXA/+b0BK7MnCjnig=
+  
   builtin-status-codes@^3.0.0:
     version "3.0.0"
     resolved "https://registry.yarnpkg.com/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz#85982878e21b98e1c66425e03d0174788f569ee8"
@@ -3181,7 +3228,7 @@ Lockfile:
       color-convert "^1.9.1"
       color-string "^1.5.2"
   
-  combined-stream@^1.0.6, combined-stream@~1.0.6:
+  combined-stream@^1.0.6, combined-stream@^1.0.8, combined-stream@~1.0.6:
     version "1.0.8"
     resolved "https://registry.yarnpkg.com/combined-stream/-/combined-stream-1.0.8.tgz#c3d45a8b34fd730631a110a8a2520682b31d5a7f"
     integrity sha512-FQN4MRfuJeHf7cBbBMJFXhKSDq+2kAArBlmRBvcvFE5BB1HZKXtSFASDhdlz9zOYwxh8lDdnvmMOe/+5cdoEdg==
@@ -4647,12 +4694,31 @@ Lockfile:
     dependencies:
       escape-string-regexp "^1.0.5"
   
+  file-api@^0.10.4:
+    version "0.10.4"
+    resolved "https://registry.yarnpkg.com/file-api/-/file-api-0.10.4.tgz#2f101226db727cc0172a0dd688f2f6883d52883d"
+    integrity sha1-LxASJttyfMAXKg3WiPL2iD1SiD0=
+    dependencies:
+      File ">= 0.10.0"
+      FileList ">= 0.10.0"
+      bufferjs "> 0.2.0"
+      file-error ">= 0.10.0"
+      filereader ">= 0.10.3"
+      formdata ">= 0.10.0"
+      mime ">= 1.2.11"
+      remedial ">= 1.0.7"
+  
   file-entry-cache@^5.0.1:
     version "5.0.1"
     resolved "https://registry.yarnpkg.com/file-entry-cache/-/file-entry-cache-5.0.1.tgz#ca0f6efa6dd3d561333fb14515065c2fafdf439c"
     integrity sha512-bCg29ictuBaKUwwArK4ouCaqDgLZcysCFLmM/Yn/FDoqndh/9vNuQfXRDvTuXKLxfD/JtZQGKFT8MGcJBK644g==
     dependencies:
       flat-cache "^2.0.1"
+  
+  "file-error@>= 0.10.0":
+    version "0.10.2"
+    resolved "https://registry.yarnpkg.com/file-error/-/file-error-0.10.2.tgz#963b48b9273b3d4b84b400ee571bc78b1739724a"
+    integrity sha1-ljtIuSc7PUuEtADuVxvHixc5cko=
   
   file-loader@4.3.0:
     version "4.3.0"
@@ -4666,6 +4732,11 @@ Lockfile:
     version "1.0.0"
     resolved "https://registry.yarnpkg.com/file-uri-to-path/-/file-uri-to-path-1.0.0.tgz#553a7b8446ff6f684359c445f1e37a05dacc33dd"
     integrity sha512-0Zt+s3L7Vf1biwWZ29aARiVYLx7iMGnEUl9x33fbB/j3jR81u/O2LbqK+Bm1CDSNDKVtJ/YjwY7TUd5SkeLQLw==
+  
+  "filereader@>= 0.10.3", filereader@^0.10.3:
+    version "0.10.3"
+    resolved "https://registry.yarnpkg.com/filereader/-/filereader-0.10.3.tgz#c747d4a2cd8f61e5418a7c07fe1257a43f0acdb1"
+    integrity sha1-x0fUos2PYeVBinwH/hJXpD8KzbE=
   
   filesize@6.0.1:
     version "6.0.1"
@@ -4817,6 +4888,11 @@ Lockfile:
     dependencies:
       for-in "^1.0.1"
   
+  foreachasync@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/foreachasync/-/foreachasync-3.0.0.tgz#5502987dc8714be3392097f32e0071c9dee07cf6"
+    integrity sha1-VQKYfchxS+M5IJfzLgBxyd7gfPY=
+  
   forever-agent@~0.6.1:
     version "0.6.1"
     resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
@@ -4836,6 +4912,24 @@ Lockfile:
       tapable "^1.0.0"
       worker-rpc "^0.1.0"
   
+  form-data@^2.5.0:
+    version "2.5.1"
+    resolved "https://registry.yarnpkg.com/form-data/-/form-data-2.5.1.tgz#f2cbec57b5e59e23716e128fe44d4e5dd23895f4"
+    integrity sha512-m21N3WOmEEURgk6B9GLOE4RuWOFf28Lhh9qGYeNlGq4VDXUlJy2th2slBNU8Gp8EzloYZOibZJ7t5ecIrFSjVA==
+    dependencies:
+      asynckit "^0.4.0"
+      combined-stream "^1.0.6"
+      mime-types "^2.1.12"
+  
+  form-data@^3.0.0:
+    version "3.0.0"
+    resolved "https://registry.yarnpkg.com/form-data/-/form-data-3.0.0.tgz#31b7e39c85f1355b7139ee0c647cf0de7f83c682"
+    integrity sha512-CKMFDglpbMi6PyN+brwB9Q/GOw0eAnsrEZDgcsH5Krhz5Od/haKHAX0NmQfha2zPPz0JpWzA7GJHGSnvCRLWsg==
+    dependencies:
+      asynckit "^0.4.0"
+      combined-stream "^1.0.8"
+      mime-types "^2.1.12"
+  
   form-data@~2.3.2:
     version "2.3.3"
     resolved "https://registry.yarnpkg.com/form-data/-/form-data-2.3.3.tgz#dcce52c05f644f298c6a7ab936bd724ceffbf3a6"
@@ -4844,6 +4938,18 @@ Lockfile:
       asynckit "^0.4.0"
       combined-stream "^1.0.6"
       mime-types "^2.1.12"
+  
+  "formdata@>= 0.10.0":
+    version "0.10.4"
+    resolved "https://registry.yarnpkg.com/formdata/-/formdata-0.10.4.tgz#9621fdc0cc361f4a0111de5d25b35f6a78dc55a0"
+    integrity sha1-liH9wMw2H0oBEd5dJbNfanjcVaA=
+    dependencies:
+      File "^0.10.2"
+      FileList "^0.10.2"
+      bufferjs "^2.0.0"
+      filereader "^0.10.3"
+      foreachasync "^3.0.0"
+      remedial "^1.0.7"
   
   forwarded@~0.1.2:
     version "0.1.2"
@@ -5407,6 +5513,20 @@ Lockfile:
     version "4.0.6"
     resolved "https://registry.yarnpkg.com/ignore/-/ignore-4.0.6.tgz#750e3db5862087b4737ebac8207ffd1ef27b25fc"
     integrity sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==
+  
+  image-convert@^0.1.33:
+    version "0.1.33"
+    resolved "https://registry.yarnpkg.com/image-convert/-/image-convert-0.1.33.tgz#ded274579c49085fd10e333fd593e7264af6186c"
+    integrity sha1-3tJ0V5xJCF/RDjM/1ZPnJkr2GGw=
+    dependencies:
+      file-api "^0.10.4"
+      images "^3.0.0"
+      request "^2.79.0"
+  
+  images@^3.0.0:
+    version "3.2.2"
+    resolved "https://registry.yarnpkg.com/images/-/images-3.2.2.tgz#eaa40c48b6e20d2bf1809dfbb407c7af1e8038e1"
+    integrity sha512-sjTADuiHlo3LeF4KjHyC/7XL4b7uUteEr0o68nmHbKWtZb/bPVww+IZMuVMhU/3QD6zXnEMDlyW89b3yOEdp2A==
   
   immer@1.10.0:
     version "1.10.0"
@@ -6940,6 +7060,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/mime/-/mime-1.6.0.tgz#32cd9e5c64553bd58d19a568af452acff04981b1"
     integrity sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==
   
+  "mime@>= 0.0.0", "mime@>= 1.2.11":
+    version "2.4.6"
+    resolved "https://registry.yarnpkg.com/mime/-/mime-2.4.6.tgz#e5b407c90db442f2beb5b162373d07b69affa4d1"
+    integrity sha512-RZKhC3EmpBchfTGBVb8fb+RL2cWyw/32lshnsETttkBAyAUXSGHxbEJWWRXc751DrIxG1q04b8QwMbAwkRPpUA==
+  
   mime@^2.4.4:
     version "2.4.4"
     resolved "https://registry.yarnpkg.com/mime/-/mime-2.4.4.tgz#bd7b91135fc6b01cde3e9bae33d659b63d8857e5"
@@ -7179,6 +7304,11 @@ Lockfile:
       lower-case "^2.0.1"
       tslib "^1.10.0"
   
+  node-bin-setup@^1.0.0:
+    version "1.0.6"
+    resolved "https://registry.yarnpkg.com/node-bin-setup/-/node-bin-setup-1.0.6.tgz#4b5c9bb937ece702d7069b36ca78af4684677528"
+    integrity sha512-uPIxXNis1CRbv1DwqAxkgBk5NFV3s7cMN/Gf556jSw6jBvV7ca4F9lRL/8cALcZecRibeqU+5dFYqFFmzv5a0Q==
+  
   node-forge@0.9.0:
     version "0.9.0"
     resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.9.0.tgz#d624050edbb44874adca12bb9a52ec63cb782579"
@@ -7240,6 +7370,13 @@ Lockfile:
     integrity sha512-snSiT1UypkgGt2wxPqS6ImEUICbNCMb31yaxWrOLXjhlt2z2/IBpaOxzONExqSm4y5oLnAqjjRWu+wsDzK5yNQ==
     dependencies:
       semver "^6.3.0"
+  
+  node@^14.4.0:
+    version "14.4.0"
+    resolved "https://registry.yarnpkg.com/node/-/node-14.4.0.tgz#be38ed681ec8f3d72637311453eb409a485ce982"
+    integrity sha512-uJ9LXT9OjBEZaFtyVxSPxLfVCPZ9TPUtyqqxSyDazj2Vj40S9sL3b1hKnctktnwTG8IMqDsUnQ6HOplDS1RuMQ==
+    dependencies:
+      node-bin-setup "^1.0.0"
   
   normalize-package-data@^2.3.2:
     version "2.5.0"
@@ -9414,6 +9551,11 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/relateurl/-/relateurl-0.2.7.tgz#54dbf377e51440aca90a4cd274600d3ff2d888a9"
     integrity sha1-VNvzd+UUQKypCkzSdGANP/LYiKk=
   
+  "remedial@>= 1.0.7", remedial@^1.0.7:
+    version "1.0.8"
+    resolved "https://registry.yarnpkg.com/remedial/-/remedial-1.0.8.tgz#a5e4fd52a0e4956adbaf62da63a5a46a78c578a0"
+    integrity sha512-/62tYiOe6DzS5BqVsNpH/nkGlX45C/Sp6V+NtiN6JQNS1Viay7cWkazmRkrQrdFj2eshDe96SIQNIoMxqhzBOg==
+  
   remove-trailing-separator@^1.0.1:
     version "1.1.0"
     resolved "https://registry.yarnpkg.com/remove-trailing-separator/-/remove-trailing-separator-1.1.0.tgz#c24bce2a283adad5bc3f58e0d48249b92379d8ef"
@@ -9456,7 +9598,7 @@ Lockfile:
       stealthy-require "^1.1.1"
       tough-cookie "^2.3.3"
   
-  request@^2.87.0, request@^2.88.0:
+  request@^2.79.0, request@^2.87.0, request@^2.88.0, request@^2.88.2:
     version "2.88.2"
     resolved "https://registry.yarnpkg.com/request/-/request-2.88.2.tgz#d73c918731cb5a87da047e207234146f664d12b3"
     integrity sha512-MsvtOrfG9ZcrOwAW+Qi+F6HbD0CWXEh9ou77uOb7FM2WPhwT7smM833PzanhJLsgXjN89Ir6V2PczXNnMpwKhw==
