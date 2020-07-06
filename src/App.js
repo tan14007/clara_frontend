@@ -1,4 +1,5 @@
 import React from 'react'
+import { isUndefined } from 'lodash'
 import { Button, Layout, Table, Menu, Upload, message, Space, Spin, Collapse, Card } from 'antd'
 import { InboxOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import nvidia from './nvidia.png'
@@ -14,24 +15,45 @@ import positive_3 from './positive_3.jpg'
 import negative_1 from './negative_1.png'
 import negative_2 from './negative_2.png'
 import negative_3 from './negative_3.png'
+import { RabbitMqInterface } from 'rabbitode'
 
 const { Header, Content, Sider } = Layout
 const { Dragger } = Upload
 const { Panel } = Collapse
 
+const mqUrl = 'amqp://localhost'
+
 class App extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      images: [],
-      results: [],
-      loading: false,
-      activeMenu: '1',
+    try {
+      this.state = {
+        images: [],
+        results: [],
+        loading: false,
+        activeMenu: '1',
+        myConnection: new RabbitMqInterface(mqUrl),
+      }
+    } catch (e) {
+      console.error(e)
+      message.error('Error occured, please refresh the page: ', e)
     }
+  }
+  handleConsume = channel => msg => {
+    console.log('CONSUME:', this.state.myConnection.decodeToString(msg))
+    channel.ack(msg)
   }
 
   handleSubmit = async () => {
     this.setState({ loading: true })
+    this.state.myConnection.enableDebugging()
+    this.state.myConnection.sendDirect({
+      exchangeName: 'test',
+      routingKey: `test`,
+      content: {
+        message: this.state.images[0].base64,
+      },
+    })
     this.state.images.map(async (im, idx) => {
       if (this.state.results.findIndex(el => el.uid == im.file.uid) !== -1) return
 
@@ -114,7 +136,6 @@ class App extends React.Component {
     ]
 
     const dataSource = this.state.images.map(el => {
-      console.log(el)
       return {
         image: <img src={el.base64} style={{ height: '150px', maxWidth: '200px' }} />,
         filename: el.filename,
