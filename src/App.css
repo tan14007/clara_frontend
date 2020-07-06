@@ -1,7 +1,13 @@
 @import '~antd/dist/antd.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+* {
+  font-family: 'Poppins', sans-serif;
+}
 
 .navigation-pane {
   min-height: 100vh;
+  /* background-color: #d68006; */
 }
 
 .nav-title {
@@ -12,16 +18,23 @@
 
 .nav-title > * {
   margin: 0em auto 2em auto;
+  font-weight: 800;
 }
 
 .logo-container {
   margin-bottom: 2em;
+  display: flex;
+}
+
+.logo-container > * {
+  width: 50%;
 }
 
 .logo {
   display: flex;
-  width: 80%;
+  width: 70%;
   margin: 2em auto 2em auto;
+  align-content: center;
 }
 
 .content-container {
@@ -31,6 +44,11 @@
 h4 {
   color: #999;
   font-style: italic;
+}
+
+.header {
+  padding: 0;
+  height: auto;
 }
 
 .header-container {
@@ -49,4 +67,17 @@ h4 {
 
 .uploader-container > .submit-button {
   margin-left: auto;
+}
+
+.example-container {
+  margin-bottom: 1em;
+}
+
+.positive {
+  font-weight: 700;
+  color: #cc3333;
+}
+
+.negative {
+  color: #33cc33;
 }

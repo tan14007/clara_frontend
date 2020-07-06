@@ -17,9 +17,11 @@
     "image-convert": "^0.1.33",
     "image-js": "^0.21.9",
     "jimp": "^0.13.0",
+    "moment": "^2.26.0",
     "node": "^14.4.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
     "request": "^2.88.2",
     "typescript": "~3.7.2"
