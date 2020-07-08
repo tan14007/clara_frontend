@@ -65,10 +65,16 @@ class App extends React.Component {
           width: 256,
         })
 
+        console.log(im.base64.slice(0, 1000))
+
         const blob = await grayImg.toBlob('image/png', 1)
 
         payload.append('image', im.file, im.filename)
-        const { data } = await axios.post('http://localhost:8080/v1/annotation?model=clara_covid_test', payload, {
+        // const { data } = await axios.post('http://localhost:8080/v1/annotation?model=clara_covid_test', payload, {
+        //   headers: { accept: 'multipart/form-data', 'Content-Type': 'multipart/form-data', params: {} },
+        // })
+
+        const { data } = await axios.post('http://localhost:5555/api/infer', payload, {
           headers: { accept: 'multipart/form-data', 'Content-Type': 'multipart/form-data', params: {} },
         })
 
