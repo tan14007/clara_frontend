@@ -1,6 +1,5 @@
 import React from 'react'
-import { isUndefined } from 'lodash'
-import { Button, Layout, Table, Menu, Upload, message, Space, Spin, Collapse, Card } from 'antd'
+import { Button, Layout, Table, Menu, Upload, message, Space, Spin, Collapse, Card, Skeleton } from 'antd'
 import { InboxOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import nvidia from './nvidia.png'
 import chula from './chula.png'
@@ -29,7 +28,8 @@ class App extends React.Component {
     try {
       this.state = {
         images: [],
-        results: [],
+        results: new Object({}),
+        pendingResults: new Object({}),
         loading: false,
         activeMenu: '1',
         myConnection: new RabbitMqInterface(mqUrl),
@@ -39,23 +39,11 @@ class App extends React.Component {
       message.error('Error occured, please refresh the page: ', e)
     }
   }
-  handleConsume = channel => msg => {
-    console.log('CONSUME:', this.state.myConnection.decodeToString(msg))
-    channel.ack(msg)
-  }
-
   handleSubmit = async () => {
     this.setState({ loading: true })
-    this.state.myConnection.enableDebugging()
-    this.state.myConnection.sendDirect({
-      exchangeName: 'test',
-      routingKey: `test`,
-      content: {
-        message: this.state.images[0].base64,
-      },
-    })
+
     this.state.images.map(async (im, idx) => {
-      if (this.state.results.findIndex(el => el.uid == im.file.uid) !== -1) return
+      if (this.state.pendingResults.hasOwnProperty(im.uid)) return
 
       let payload = new FormData()
       try {
@@ -65,22 +53,28 @@ class App extends React.Component {
           width: 256,
         })
 
-        console.log(im.base64.slice(0, 1000))
-
         const blob = await grayImg.toBlob('image/png', 1)
 
-        payload.append('image', im.file, im.filename)
+        payload.append('image', await grayImg.toDataURL())
         // const { data } = await axios.post('http://localhost:8080/v1/annotation?model=clara_covid_test', payload, {
-        //   headers: { accept: 'multipart/form-data', 'Content-Type': 'multipart/form-data', params: {} },
+        //   // headers: { accept: 'multipart/form-data', 'Content-Type': 'multipart/form-data', params: {} },
         // })
 
         const { data } = await axios.post('http://localhost:5555/api/infer', payload, {
-          headers: { accept: 'multipart/form-data', 'Content-Type': 'multipart/form-data', params: {} },
+          // headers: { accept: 'multipart/form-data', 'Content-Type': 'multipart/form-data', params: {} },
         })
 
-        this.setState(prevState => {
-          return { results: prevState.results.concat([{ uid: im.file.uid, result: Number(data.split('\n')[9]) }]) }
-        })
+        let eventSource = new EventSource('http://localhost:5555/api/get-results?id=' + data.id)
+        eventSource.onmessage = e => {
+          console.log('Message', JSON.parse(e.data))
+          const result = JSON.parse(e.data).result
+          this.state.results[result.id] = Number(result.confidence)
+          eventSource.removeEventListener('message', eventSource)
+          this.forceUpdate()
+        }
+
+        this.state.pendingResults[im.file.uid] = data.id
+        this.forceUpdate()
       } catch (e) {
         console.error(e)
         message.error(`Image ${im.filename} can't be processed`)
@@ -142,21 +136,31 @@ class App extends React.Component {
     ]
 
     const dataSource = this.state.images.map(el => {
+      console.log(
+        'Results',
+        el.uid,
+        this.state.pendingResults,
+        this.state.pendingResults.hasOwnProperty(el.uid),
+        this.state.pendingResults[String(el.uid)],
+        this.state.results,
+      )
       return {
         image: <img src={el.base64} style={{ height: '150px', maxWidth: '200px' }} />,
         filename: el.filename,
         time: el.time.format('HH:mm:ss'),
-        result:
-          this.state.results.findIndex(res_el => el.uid == res_el.uid) === -1 ? (
-            'Please click upload image above'
-          ) : (
-            <span
-              className={this.state.results.find(res_el => el.uid == res_el.uid).result > 0.5 ? 'positive' : 'negative'}
-            >
-              {this.state.results.find(res_el => el.uid == res_el.uid).result > 0.5 ? 'Positive' : 'Negative'} (
-              {(this.state.results.find(res_el => el.uid == res_el.uid).result * 100).toFixed(2)}%)
-            </span>
-          ),
+        result: !this.state.pendingResults.hasOwnProperty(el.uid) ? (
+          'Please click upload image above'
+        ) : !this.state.results.hasOwnProperty(this.state.pendingResults[el.uid]) ? (
+          <Spin spinning="true" message="Wating for result">
+            <Skeleton paragraph={{ rows: 1 }} />
+          </Spin>
+        ) : (
+          <span className={this.state.results[this.state.pendingResults[el.uid]] > 0.5 ? 'positive' : 'negative'}>
+            {this.state.results[this.state.pendingResults[el.uid]] > 0.5 ? 'Positive' : 'Negative'} (
+            {(this.state.results[this.state.pendingResults[el.uid]] * 100).toFixed(2)}%)
+          </span>
+        ),
+
         action: (
           <span
             onClick={e => {
