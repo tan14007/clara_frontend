@@ -14,16 +14,14 @@ import positive_3 from './positive_3.jpg'
 import negative_1 from './negative_1.png'
 import negative_2 from './negative_2.png'
 import negative_3 from './negative_3.png'
-import { RabbitMqInterface } from 'rabbitode'
 
 const { Header, Content, Sider } = Layout
 const { Dragger } = Upload
 const { Panel } = Collapse
 
-const mqUrl = 'amqp://localhost'
-
 class App extends React.Component {
   constructor(props) {
+    console.log(process.env)
     super(props)
     try {
       this.state = {
@@ -32,7 +30,6 @@ class App extends React.Component {
         pendingResults: new Object({}),
         loading: false,
         activeMenu: '1',
-        myConnection: new RabbitMqInterface(mqUrl),
       }
     } catch (e) {
       console.error(e)
@@ -56,13 +53,8 @@ class App extends React.Component {
         const blob = await grayImg.toBlob('image/png', 1)
 
         payload.append('image', await grayImg.toDataURL())
-        // const { data } = await axios.post('http://localhost:8080/v1/annotation?model=clara_covid_test', payload, {
-        //   // headers: { accept: 'multipart/form-data', 'Content-Type': 'multipart/form-data', params: {} },
-        // })
 
-        const { data } = await axios.post('http://localhost:5555/api/infer', payload, {
-          // headers: { accept: 'multipart/form-data', 'Content-Type': 'multipart/form-data', params: {} },
-        })
+        const { data } = await axios.post('http://localhost:5555/api/infer', payload, {})
 
         let eventSource = new EventSource('http://localhost:5555/api/get-results?id=' + data.id)
         eventSource.onmessage = e => {
@@ -96,7 +88,6 @@ class App extends React.Component {
           this.setState(prevState => {
             return {
               images: prevState.images.concat([
-                //@ts-ignore
                 { file: file, base64: fileContent, filename: file.name, uid: file.uid, time: moment() },
               ]),
             }

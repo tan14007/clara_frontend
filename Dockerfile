@@ -1,5 +1,5 @@
 # Select the image to use
-FROM rabbitmq:3.8.5-alpine
+FROM alpine:latest
 
 RUN apk add npm
 RUN apk add yarn
@@ -19,6 +19,6 @@ ADD . /app
 WORKDIR /app
 
 # expose port 3000
-EXPOSE 3000 5672 15671 15672
+EXPOSE 3000
 
-ENTRYPOINT [ "rabbitmq-server", "-detached","&&", "/bin/sh", "-c", "yarn start" ]
+ENTRYPOINT [ "/bin/sh", "-c", "yarn start" ]
