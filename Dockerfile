@@ -3,8 +3,11 @@ FROM alpine:latest
 
 RUN apk add npm
 RUN apk add yarn
-
-# RUN rabbitmq-plugins enable --offline rabbitmq_management 
+# Why canvasjs require such many package
+RUN apk add python3
+RUN apk add pkgconfig
+RUN apk add g++ make
+RUN apk add pixman-dev cairo-dev pango-dev jpeg-dev giflib-dev
 
 ## Install dependencies in the root of the Container
 COPY package.json yarn.lock ./
