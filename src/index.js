@@ -2,13 +2,10 @@ import React from 'react'
 import path from 'path'
 import ReactDOM from 'react-dom'
 import './index.css'
-import App from './src/App'
+import App from './App'
 import dotenv from 'dotenv'
 
 dotenv.config({ path: path.join(__dirname, '.env') })
-
-console.log(path.join(__dirname, '.env'))
-console.log(process.env)
 
 ReactDOM.render(
   // <React.StrictMode>

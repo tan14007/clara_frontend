@@ -176,6 +176,63 @@ class App extends React.Component {
       }
     })
 
+    const inferContent = (
+      <>
+        <div className="header-container">
+          <h1>Analyze COVID-19 from X-ray Images</h1>
+          <h4>Upload your X-ray image below and click upload button to analyze images.</h4>
+        </div>
+        <div className="uploader-container">
+          <Dragger {...uploadProps} className="uploader" showUploadList={false}>
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined style={{ color: '#f0518d' }} />
+            </p>
+            <p className="ant-upload-text">Click or drag file to this area to upload</p>
+            <p className="ant-upload-hint">Support for a single or bulk upload. </p>
+          </Dragger>
+          <Button type="primary" className="submit-button" onClick={this.handleSubmit} disabled={this.state.loading}>
+            Upload
+          </Button>
+        </div>
+        <div className="example-container">
+          <h2>Example image for demo (Download and try)</h2>
+          <Collapse>
+            <Panel header="Positive (COVID-19 patient)">
+              <Space className="card-container" align="center" direction="horizontal" size="large">
+                <Card hoverable style={{ width: 200 }} cover={<img src={positive_1} />}></Card>
+                <Card hoverable style={{ width: 200 }} cover={<img src={positive_2} />}></Card>
+                <Card hoverable style={{ width: 200 }} cover={<img src={positive_3} />}></Card>
+              </Space>
+            </Panel>
+            <Panel header="Negative (not COVID-19 patient)">
+              <Space className="card-container" align="center" direction="horizontal" size="large">
+                <Card hoverable style={{ width: 200 }} cover={<img src={negative_1} />}></Card>
+                <Card hoverable style={{ width: 200 }} cover={<img src={negative_2} />}></Card>
+                <Card hoverable style={{ width: 200 }} cover={<img src={negative_3} />}></Card>
+              </Space>
+            </Panel>
+          </Collapse>
+        </div>
+        <div className="result-container">
+          <h2>Results</h2>
+          <Spin spinning={this.state.loading}>
+            <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 3 }} />
+          </Spin>
+        </div>
+      </>
+    )
+
+    const aboutContent = (
+      <>
+        <div className="header-container">
+          <h1>About this app</h1>
+          <h4>
+            This app backend is created using <a>Clara Train SDK</a>
+          </h4>
+        </div>
+      </>
+    )
+
     return (
       <div className="App">
         <Layout>
@@ -190,7 +247,10 @@ class App extends React.Component {
               <Menu
                 theme="dark"
                 selectedKeys={this.state.activeMenu}
-                onClick={key => this.setState({ acitveMenu: key })}
+                onClick={key => {
+                  console.log(key)
+                  this.setState({ activeMenu: key.key })
+                }}
               >
                 <div className="nav-title">
                   <span>X-ray COVID-19 Analyzer</span>
@@ -200,54 +260,7 @@ class App extends React.Component {
               </Menu>
             </Content>
           </Sider>
-          <Content className="content-container">
-            <div className="header-container">
-              <h1>Analyze COVID-19 from X-ray Images</h1>
-              <h4>Upload your X-ray image below and click upload button to analyze images.</h4>
-            </div>
-            <div className="uploader-container">
-              <Dragger {...uploadProps} className="uploader" showUploadList={false}>
-                <p className="ant-upload-drag-icon">
-                  <InboxOutlined />
-                </p>
-                <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                <p className="ant-upload-hint">Support for a single or bulk upload. </p>
-              </Dragger>
-              <Button
-                type="primary"
-                className="submit-button"
-                onClick={this.handleSubmit}
-                disabled={this.state.loading}
-              >
-                Upload
-              </Button>
-            </div>
-            <div className="example-container">
-              <h2>Example image for demo (Download and try)</h2>
-              <Collapse>
-                <Panel header="Positive (COVID-19 patient)">
-                  <Space className="card-container" align="center" direction="horizontal" size="large">
-                    <Card hoverable style={{ width: 200 }} cover={<img src={positive_1} />}></Card>
-                    <Card hoverable style={{ width: 200 }} cover={<img src={positive_2} />}></Card>
-                    <Card hoverable style={{ width: 200 }} cover={<img src={positive_3} />}></Card>
-                  </Space>
-                </Panel>
-                <Panel header="Negative (not COVID-19 patient)">
-                  <Space className="card-container" align="center" direction="horizontal" size="large">
-                    <Card hoverable style={{ width: 200 }} cover={<img src={negative_1} />}></Card>
-                    <Card hoverable style={{ width: 200 }} cover={<img src={negative_2} />}></Card>
-                    <Card hoverable style={{ width: 200 }} cover={<img src={negative_3} />}></Card>
-                  </Space>
-                </Panel>
-              </Collapse>
-            </div>
-            <div className="result-container">
-              <h2>Results</h2>
-              <Spin spinning={this.state.loading}>
-                <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 3 }} />
-              </Spin>
-            </div>
-          </Content>
+          <Content className="content-container">{this.state.activeMenu === '1' ? inferContent : aboutContent}</Content>
         </Layout>
       </div>
     )

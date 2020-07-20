@@ -1,13 +1,59 @@
 @import '~antd/dist/antd.css';
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+/* 
+@dark-gray: #58595b;
+@light-gray: #858585;
+@chula-pink: #de5c8e;
+@chula-pink-hover: #f8e1ea; */
 
 * {
   font-family: 'Poppins', sans-serif;
 }
 
+/* Quick Overridding Antd theme */
+
+.ant-menu-dark,
+.header {
+  background-color: #de5c8e !important;
+}
+
+.ant-menu-item-selected {
+  background-color: #cf4b7d !important;
+}
+
+.ant-btn {
+  border-color: #de5c8e !important;
+  background-color: #de5c8e !important;
+}
+
+.ant-btn:hover {
+  background-color: #f0518d !important;
+}
+
+.ant-upload:hover {
+  border-color: #f0518d !important;
+}
+
+.ant-pagination-item-active,
+.ant-pagination-item:hover,
+.ant-pagination-next:hover:not(.ant-pagination-disabled) > *,
+.ant-pagination-prev:hover:not(.ant-pagination-disabled) > * {
+  border-color: #de5c8e !important;
+  color: #de5c8e !important;
+}
+
+.ant-pagination-item-active > a,
+.ant-pagination-item > a:hover,
+.ant-pagination-item-ellipsis,
+.anticon-double-right,
+.ant-pagination-next:hover,
+.ant-pagination-prev:hover {
+  color: #de5c8e !important;
+}
+
 .navigation-pane {
   min-height: 100vh;
-  /* background-color: #d68006; */
+  background-color: #de5c8e !important;
 }
 
 .nav-title {
