@@ -12,6 +12,10 @@
 
 /* Quick Overridding Antd theme */
 
+a {
+  color: #de5c8e !important;
+}
+
 .ant-menu-dark,
 .header {
   background-color: #de5c8e !important;
@@ -72,15 +76,25 @@
   display: flex;
 }
 
-.logo-container > * {
-  width: 50%;
+.logo-container > *:first-child {
+  width: 30%;
+}
+
+.logo-container > *:not(:first-child) {
+  width: 70%;
 }
 
 .logo {
   display: flex;
   width: 70%;
-  margin: 2em auto 2em auto;
+  margin: 2em 0.5em 2em 0.5em;
   align-content: center;
+}
+
+.logo-container > *:not(:first-child) > .logo {
+  margin: auto;
+  padding-right: 0.5em;
+  width: 100%;
 }
 
 .content-container {

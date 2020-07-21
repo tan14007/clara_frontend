@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Layout, Table, Menu, Upload, message, Space, Spin, Collapse, Card, Skeleton } from 'antd'
+import { Button, Layout, Table, Menu, Upload, message, Space, Spin, Collapse, Card, Skeleton, Col, Row } from 'antd'
 import { InboxOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import nvidia from './nvidia.png'
 import chula from './chula.png'
@@ -14,6 +14,9 @@ import positive_3 from './positive_3.jpg'
 import negative_1 from './negative_1.png'
 import negative_2 from './negative_2.png'
 import negative_3 from './negative_3.png'
+import mindLogo from './datamind.png'
+
+const apiPath = 'http://localhost:5555/api'
 
 const { Header, Content, Sider } = Layout
 const { Dragger } = Upload
@@ -54,9 +57,9 @@ class App extends React.Component {
 
         payload.append('image', await grayImg.toDataURL())
 
-        const { data } = await axios.post('http://localhost:5555/api/infer', payload, {})
+        const { data } = await axios.post(apiPath + '/infer', payload, {})
 
-        let eventSource = new EventSource('http://localhost:5555/api/get-results?id=' + data.id)
+        let eventSource = new EventSource(apiPath + '/get-results?id=' + data.id)
         eventSource.onmessage = e => {
           console.log('Message', JSON.parse(e.data))
           const result = JSON.parse(e.data).result
@@ -227,7 +230,31 @@ class App extends React.Component {
         <div className="header-container">
           <h1>About this app</h1>
           <h4>
-            This app backend is created using <a>Clara Train SDK</a>
+            <Row>
+              <Col sm={{ span: 24 }} md={{ span: 16 }}>
+                This app inference server is created using{' '}
+                <a href="https://developer.nvidia.com/clara">Clara Train SDK AIAA Server</a>. We used NVIDIA pretrained{' '}
+                <span style={{ fontFamily: 'SFMono-Regular, Consolas, Liberation Mono, Menlo, Courier, monospace' }}>
+                  clara_xray_classification_chest_amp
+                </span>{' '}
+                (DenseNet121) model trained with <a href="https://github.com/UCSD-AI4H/COVID-CT">COVID-CT-Dataset</a> in
+                order to demonstrate the usage of CLARA framework.
+              </Col>
+            </Row>
+            <Row>
+              <Col sm={{ span: 24 }} md={{ span: 16 }}>
+                Hopefully, we could get real X-ray images for training the model in order to develop this website
+                further.
+              </Col>
+            </Row>
+          </h4>
+          <h4>
+            <Row>
+              <Col sm={{ span: 24 }} md={{ span: 16 }}>
+                The website developed by Data Mining Group (MIND Lab), Computer Engineering of Chulalongkorn University.
+                <img src={mindLogo} alt="datamind logo" />
+              </Col>
+            </Row>
           </h4>
         </div>
       </>
@@ -238,7 +265,7 @@ class App extends React.Component {
         <Layout>
           <Sider className="navigation-pane">
             <Header className="header">
-              <Space align="center" direction="horizontal" className="logo-container">
+              <Space size="small" align="center" direction="horizontal" className="logo-container">
                 <img src={nvidia} alt="nvidia-logo" className="logo" />
                 <img src={chula} alt="chula-logo" className="logo" />
               </Space>
