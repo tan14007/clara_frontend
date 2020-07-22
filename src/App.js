@@ -16,7 +16,7 @@ import negative_2 from './negative_2.png'
 import negative_3 from './negative_3.png'
 import mindLogo from './datamind.png'
 
-const apiPath = 'http://localhost:5555/api'
+const apiPath = 'http://cu-nvidia.cp.eng.chula.ac.th/api'
 
 const { Header, Content, Sider } = Layout
 const { Dragger } = Upload
@@ -182,7 +182,7 @@ class App extends React.Component {
     const inferContent = (
       <>
         <div className="header-container">
-          <h1>Analyze COVID-19 from X-ray Images</h1>
+          <h1>Analyze COVID-19 from X-ray Images (Demo)</h1>
           <h4>Upload your X-ray image below and click upload button to analyze images.</h4>
         </div>
         <div className="uploader-container">
