@@ -25,13 +25,15 @@ a {
   background-color: #cf4b7d !important;
 }
 
-.ant-btn {
-  border-color: #de5c8e !important;
-  background-color: #de5c8e !important;
+.ant-btn-default {
+  border-color: #de5c8e;
+  color: #de5c8e;
+  /* background-color: #de5c8e !important; */
 }
 
-.ant-btn:hover {
-  background-color: #f0518d !important;
+.ant-btn-default:hover {
+  border-color: #f0518d;
+  color: #f0518d;
 }
 
 .ant-upload:hover {
@@ -77,11 +79,15 @@ a {
 }
 
 .logo-container > *:first-child {
-  width: 30%;
+  width: 25%;
 }
 
-.logo-container > *:not(:first-child) {
-  width: 70%;
+.logo-container > *:nth-child(2) {
+  width: 40%;
+}
+
+.logo-container > *:last-child {
+  width: 25%;
 }
 
 .logo {

@@ -3,6 +3,7 @@ import { Button, Layout, Table, Menu, Upload, message, Space, Spin, Collapse, Ca
 import { InboxOutlined, CloseCircleOutlined } from '@ant-design/icons'
 import nvidia from './nvidia.png'
 import chula from './chula.png'
+import med from './med.png'
 import axios from 'axios'
 import FormData from 'form-data'
 import './App.css'
@@ -39,43 +40,44 @@ class App extends React.Component {
       message.error('Error occured, please refresh the page: ', e)
     }
   }
-  handleSubmit = async () => {
+  handleSubmit = async im => {
     this.setState({ loading: true })
 
-    this.state.images.map(async (im, idx) => {
-      if (this.state.pendingResults.hasOwnProperty(im.uid)) return
+    // this.state.images.map(async (im, idx) => {
+    if (this.state.pendingResults.hasOwnProperty(im.uid)) return
 
-      let payload = new FormData()
-      try {
-        const img = await Image.load(im.base64)
-        let grayImg = await img.grey()
-        grayImg = await grayImg.resize({
-          width: 256,
-        })
+    let payload = new FormData()
+    try {
+      const img = await Image.load(im.base64)
+      let grayImg = await img.grey()
+      grayImg = await grayImg.resize({
+        width: 256,
+      })
 
-        const blob = await grayImg.toBlob('image/png', 1)
+      const blob = await grayImg.toBlob('image/png', 1)
 
-        payload.append('image', await grayImg.toDataURL())
+      payload.append('image', await grayImg.toDataURL())
 
-        const { data } = await axios.post(apiPath + '/infer', payload, {})
+      const { data } = await axios.post(apiPath + '/infer', payload, {})
 
-        let eventSource = new EventSource(apiPath + '/get-results?id=' + data.id)
-        eventSource.onmessage = e => {
-          console.log('Message', JSON.parse(e.data))
-          const result = JSON.parse(e.data).result
-          this.state.results[result.id] = Number(result.confidence)
-          eventSource.removeEventListener('message', eventSource)
-          this.forceUpdate()
-        }
-
-        this.state.pendingResults[im.file.uid] = data.id
+      let eventSource = new EventSource(apiPath + '/get-results?id=' + data.id)
+      eventSource.onmessage = e => {
+        console.log('Message', JSON.parse(e.data))
+        const result = JSON.parse(e.data).result
+        this.state.results[result.id] = Number(result.confidence)
+        eventSource.removeEventListener('message', eventSource)
+        this.setState({ loading: false })
         this.forceUpdate()
-      } catch (e) {
-        console.error(e)
-        message.error(`Image ${im.filename} can't be processed`)
       }
-    })
-    this.setState({ loading: false })
+
+      this.state.pendingResults[im.file.uid] = data.id
+      this.forceUpdate()
+    } catch (e) {
+      console.error(e)
+      message.error(`Image ${im.filename} can't be processed`)
+    }
+    // })
+
     this.forceUpdate()
   }
 
@@ -123,7 +125,7 @@ class App extends React.Component {
         key: 'result',
       },
       {
-        title: 'Remove Image',
+        title: 'Actions',
         dataIndex: 'action',
         key: 'action',
       },
@@ -143,7 +145,7 @@ class App extends React.Component {
         filename: el.filename,
         time: el.time.format('HH:mm:ss'),
         result: !this.state.pendingResults.hasOwnProperty(el.uid) ? (
-          'Please click upload image above'
+          'Please click upload button'
         ) : !this.state.results.hasOwnProperty(this.state.pendingResults[el.uid]) ? (
           <Spin spinning="true" message="Wating for result">
             <Skeleton paragraph={{ rows: 1 }} />
@@ -156,25 +158,29 @@ class App extends React.Component {
         ),
 
         action: (
-          <span
-            onClick={e => {
-              this.setState(prevState => {
-                const imageIndex = prevState.images.findIndex(im_el => im_el.uid == el.uid)
-                const resultIndex = this.state.results.find(res_el => res_el.uid == el.uid)
-                return {
-                  ...prevState,
-                  images: prevState.images.slice(0, imageIndex).concat(prevState.images.slice(imageIndex + 1)),
-                  results:
-                    resultIndex === -1
-                      ? prevState.results
-                      : prevState.results.slice(0, resultIndex).concat(prevState.results.slice(resultIndex + 1)),
-                }
-              })
-            }}
-            style={{ cursor: 'pointer', color: '#cc3333' }}
-          >
-            <CloseCircleOutlined />
-          </span>
+          <Space>
+            <Button
+              type="default"
+              disabled={this.state.pendingResults.hasOwnProperty(el.uid) || this.state.loading}
+              onClick={() => this.handleSubmit(el)}
+            >
+              Upload
+            </Button>
+            <span
+              onClick={e => {
+                this.setState(prevState => {
+                  const imageIndex = prevState.images.findIndex(im_el => im_el.uid == el.uid)
+                  return {
+                    ...prevState,
+                    images: prevState.images.slice(0, imageIndex).concat(prevState.images.slice(imageIndex + 1)),
+                  }
+                })
+              }}
+              style={{ cursor: 'pointer', color: '#cc3333' }}
+            >
+              <CloseCircleOutlined />
+            </span>
+          </Space>
         ),
       }
     })
@@ -185,20 +191,8 @@ class App extends React.Component {
           <h1>Analyze COVID-19 from X-ray Images (Demo)</h1>
           <h4>Upload your X-ray image below and click upload button to analyze images.</h4>
         </div>
-        <div className="uploader-container">
-          <Dragger {...uploadProps} className="uploader" showUploadList={false}>
-            <p className="ant-upload-drag-icon">
-              <InboxOutlined style={{ color: '#f0518d' }} />
-            </p>
-            <p className="ant-upload-text">Click or drag file to this area to upload</p>
-            <p className="ant-upload-hint">Support for a single or bulk upload. </p>
-          </Dragger>
-          <Button type="primary" className="submit-button" onClick={this.handleSubmit} disabled={this.state.loading}>
-            Upload
-          </Button>
-        </div>
         <div className="example-container">
-          <h2>Example image for demo (Download and try)</h2>
+          <h2>Example image for demo (download and try)</h2>
           <Collapse>
             <Panel header="Positive (COVID-19 patient)">
               <Space className="card-container" align="center" direction="horizontal" size="large">
@@ -216,11 +210,23 @@ class App extends React.Component {
             </Panel>
           </Collapse>
         </div>
+        <div className="uploader-container">
+          <Dragger {...uploadProps} className="uploader" showUploadList={false}>
+            <p className="ant-upload-drag-icon">
+              <InboxOutlined style={{ color: '#f0518d' }} />
+            </p>
+            <p className="ant-upload-text">Click or drag file to this area to upload</p>
+            <p className="ant-upload-hint">Support for a single or bulk upload. </p>
+          </Dragger>
+          {/* <Button type="primary" className="submit-button" onClick={this.handleSubmit} disabled={this.state.loading}>
+            Upload
+          </Button> */}
+        </div>
         <div className="result-container">
           <h2>Results</h2>
-          <Spin spinning={this.state.loading}>
-            <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 3 }} />
-          </Spin>
+          {/* <Spin spinning={this.state.loading}> */}
+          <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 3 }} />
+          {/* </Spin> */}
         </div>
       </>
     )
@@ -268,6 +274,7 @@ class App extends React.Component {
               <Space size="small" align="center" direction="horizontal" className="logo-container">
                 <img src={nvidia} alt="nvidia-logo" className="logo" />
                 <img src={chula} alt="chula-logo" className="logo" />
+                <img src={med} alt="med-logo" className="logo" />
               </Space>
             </Header>
             <Content>
