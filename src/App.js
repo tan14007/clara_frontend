@@ -188,8 +188,8 @@ class App extends React.Component {
     const inferContent = (
       <>
         <div className="header-container">
-          <h1>Analyze COVID-19 from X-ray Images (Demo)</h1>
-          <h4>Upload your X-ray image below and click upload button to analyze images.</h4>
+          <h1>Analyze COVID-19 from 2D CT Scan image of chest & lung (Demo)</h1>
+          <h4>Upload your 2D CT Scan images below and click upload button to analyze them.</h4>
         </div>
         <div className="example-container">
           <h2>Example image for demo (download and try)</h2>
@@ -287,7 +287,7 @@ class App extends React.Component {
                 }}
               >
                 <div className="nav-title">
-                  <span>X-ray COVID-19 Analyzer</span>
+                  <span>CT Scan COVID-19 Analyzer</span>
                 </div>
                 <Menu.Item key="1">Analyze Image</Menu.Item>
                 <Menu.Item key="2">About this project</Menu.Item>
